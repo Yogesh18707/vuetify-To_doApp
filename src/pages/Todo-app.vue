@@ -20,33 +20,36 @@
           :key="index"
           :class="{'text-decoration-line-through' :task.done}"
         >
-          <v-list-item-action>
-            <v-checkbox
-              v-model="task.done"
-              color="primary"
-              :ripple="false"
-            />
-            <v-list-item-content>
-              <v-list-item-title> {{ task.text }}</v-list-item-title>
-            </v-list-item-content>
-            <v-list-item-actions>
-
+          <v-list-item-action class="d-flex align-center justify-space-between">
+            <div class="d-inline-flex">
+              <v-checkbox
+                v-model="task.done"
+                class="d-flex align-lg-center"
+                color="primary"
+                :ripple="false"
+              />
+              <v-list-item-content class="d-flex align-center">
+                <v-list-item-title> {{ task.text }}</v-list-item-title>
+              </v-list-item-content>
+            </div>
+            <v-list-item-action>
               <v-btn
+                class="d-flex  align-center justify-md-end "
                 color="red"
                 icon
                 @click="deleteTask(index)"
               >
                 <v-icon size="small">mdi-delete</v-icon>
               </v-btn>
-            </v-list-item-actions>
-
+            </v-list-item-action>
           </v-list-item-action>
           <v-list-item v-if="tasks.length === 0">
             <v-list-item-title class="text.grey">
               No tasks found.
             </v-list-item-title>
           </v-list-item>
-        </v-list-item></v-list>
+        </v-list-item>
+      </v-list>
     </v-card>
   </v-container>
 </template>
