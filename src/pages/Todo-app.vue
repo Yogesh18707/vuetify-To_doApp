@@ -1,5 +1,5 @@
 <template>
-  <h1 style="margin-left:45% ">To-Do App</h1>
+  <h1 style="margin-left:45%">To-Do App</h1>
   <v-container class="pa-4" style="max-width: 600px">
     <v-card>
       <v-card-title>
@@ -15,10 +15,11 @@
       <v-divider />
 
       <v-list>
+        <!-- Task Items -->
         <v-list-item
-          v-for="(task,index) in tasks"
-          :key="index"
-          :class="{'text-decoration-line-through' :task.done}"
+          v-for="(task, index) in tasks"
+          :key="task.id"
+          :class="{ 'text-decoration-line-through': task.done }"
         >
           <v-list-item-action class="d-flex align-center justify-space-between">
             <div class="d-inline-flex">
@@ -29,12 +30,12 @@
                 :ripple="false"
               />
               <v-list-item-content class="d-flex align-center">
-                <v-list-item-title> {{ task.text }}</v-list-item-title>
+                <v-list-item-title>{{ task.text }}</v-list-item-title>
               </v-list-item-content>
             </div>
             <v-list-item-action>
               <v-btn
-                class="d-flex  align-center justify-md-end "
+                class="d-flex align-center justify-md-end"
                 color="red"
                 icon
                 @click="deleteTask(index)"
@@ -43,13 +44,16 @@
               </v-btn>
             </v-list-item-action>
           </v-list-item-action>
-          <v-list-item v-if="tasks.length === 0">
-            <v-list-item-title class="text.grey">
-              No tasks found.
-            </v-list-item-title>
-          </v-list-item>
+        </v-list-item>
+
+        <!-- Empty State Message -->
+        <v-list-item v-if="tasks.length === 0">
+          <v-list-item-title class="text-grey">
+            No tasks found.
+          </v-list-item-title>
         </v-list-item>
       </v-list>
+
     </v-card>
   </v-container>
 </template>
@@ -69,12 +73,12 @@
   const addTask = () => {
     const text = newTask.value.trim()
     if (text) {
-      tasks.value.push({ text, done: false })
+      tasks.value.push({ id: Date.now(), text, done: false })
       newTask.value = ''
     }
   }
 
-  const deleteTask = index => {
+  const deleteTask = (index: number) => {
     tasks.value.splice(index, 1)
   }
 </script>

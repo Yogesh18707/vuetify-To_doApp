@@ -1,5 +1,4 @@
 <template>
-  <h1>Welcome</h1>
   <v-app>
     <Todo-app />
   </v-app>
