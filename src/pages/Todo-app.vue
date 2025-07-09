@@ -1,5 +1,5 @@
 <template>
-  <h1 style="margin-left:45%">To-Do App</h1>
+  <h1 style="margin-left:40%">To-Do App</h1>
   <v-container class="pa-4" style="max-width: 600px">
     <v-card>
       <v-card-title>
@@ -19,9 +19,8 @@
         <v-list-item
           v-for="(task, index) in tasks"
           :key="task.id"
-          :class="{ 'text-decoration-line-through': task.done }"
         >
-          <v-list-item-action class="d-flex align-center justify-space-between">
+          <v-list-item-action class="d-flex align-center justify-space-between ">
             <div class="d-inline-flex">
               <v-checkbox
                 v-model="task.done"
@@ -30,12 +29,12 @@
                 :ripple="false"
               />
               <v-list-item-content class="d-flex align-center">
-                <v-list-item-title>{{ task.text }}</v-list-item-title>
+                <v-list-item-title :class="{ 'text-decoration-line-through': task.done }">{{ task.text }}</v-list-item-title>
               </v-list-item-content>
             </div>
             <v-list-item-action>
               <v-btn
-                class="d-flex align-center justify-md-end"
+                class="d-flex align-center justify-md-end "
                 color="red"
                 icon
                 @click="deleteTask(index)"
@@ -59,7 +58,7 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from 'vue'
+  import { onMounted, ref, watch } from 'vue'
 
   interface ITodo {
     id: number
@@ -70,6 +69,22 @@
   const newTask = ref('')
   const tasks = ref<ITodo[]>([])
 
+  const STORAGE_KEY = 'todo-list'
+
+  onMounted(() => {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    if (stored) {
+      tasks.value = JSON.parse(stored)
+    }
+  })
+
+  watch(
+    tasks,
+    newTasks => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(newTasks))
+    },
+    { deep: true },
+  )
   const addTask = () => {
     const text = newTask.value.trim()
     if (text) {
